@@ -1,7 +1,9 @@
-import { authMiddleware } from '@kinde-oss/kinde-auth-nextjs/server'
+import { authMiddleware } from "@clerk/nextjs";
+
+export default authMiddleware({
+  publicRoutes: ["/", "/api/webhooks/clerk", "/api/webhooks/stripe"],
+});
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth-callback'],
-}
-
-export default authMiddleware
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+};
