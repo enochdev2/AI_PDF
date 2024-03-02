@@ -4,6 +4,7 @@ import React from 'react'
 import { usePathname, useRouter } from "next/navigation";
 import { SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import { Button, buttonVariants } from "./ui/button";
 
 
 
@@ -13,14 +14,18 @@ const SignOut = () => {
 
 
   return (
-    <div className="mt-10 px-6">
+    <div className="mt-10 px-6 bg-blue-500">
       <SignedIn>
         <SignOutButton signOutCallback={() => router.push("/sign-in")}>
-          <div className="flex cursor-pointer gap-4 p-4">
+          <Button
+            className={buttonVariants({
+              size: "sm",
+            })}
+          >
             <Image src="/logout.svg" alt="logout" width={24} height={24} />
 
-            <p className="text-light-2 max-lg:hidden">Logout</p>
-          </div>
+            <p className="text-sky-600 ">Logout</p>
+          </Button>
         </SignOutButton>
       </SignedIn>
     </div>

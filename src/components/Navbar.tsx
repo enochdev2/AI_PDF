@@ -12,7 +12,6 @@ import Image from "next/image";
 import SignOut from "./SignOut";
 
 const Navbar = async () => {
-
   const user: any = await currentUser();
   // console.log("🚀 ~ Navbar ~ user:", user)
 
@@ -22,7 +21,9 @@ const Navbar = async () => {
         <div className="flex h-14 items-center justify-between border-b border-zinc-200">
           <Link href="/" className="flex z-40 font-semibold">
             <span>AI_PDF READER</span>
+         
           </Link>
+
 
           <MobileNav isAuth={!!user} />
 
@@ -39,13 +40,14 @@ const Navbar = async () => {
                   Pricing
                 </Link>
                 <SignedOut>
-                  <Button asChild className=" bg-purple-gradient bg-cover">
+                  <Button
+                    className={buttonVariants({
+                      size: "sm",
+                    })}
+                  >
                     <Link href="/sign-in">Login</Link>
                   </Button>
-                </SignedOut>
-                <SignedOut>
                   <Button
-                    asChild
                     className={buttonVariants({
                       size: "sm",
                     })}
@@ -66,20 +68,20 @@ const Navbar = async () => {
                   Dashboard
                 </Link>
                 <SignedIn>
-                  {/* <UserAccountNav
+                  <UserAccountNav
                     name={
-                      !user.given_name || !user.family_name
+                      !user.firstName || !user.lastName
                         ? "Your Account"
-                        : `${user.given_name} ${user.family_name}`
+                        : `${user.firstName} ${user.lastName}`
                     }
                     email={user.email ?? ""}
                     imageUrl={user.picture ?? ""}
-                  /> */}
+                  />
                 </SignedIn>
               </>
             )}
           </div>
-          <SignOut/>
+          {/* <SignOut /> */}
         </div>
       </MaxWidthWrapper>
     </nav>
