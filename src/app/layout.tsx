@@ -1,36 +1,45 @@
-import Navbar from '@/components/Navbar'
-import Providers from '@/components/Providers'
-import { cn, constructMetadata } from '@/lib/utils'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import { ClerkProvider } from "@clerk/nextjs";
 
-import 'react-loading-skeleton/dist/skeleton.css'
-import 'simplebar-react/dist/simplebar.min.css'
+import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
+import { cn, constructMetadata } from "@/lib/utils";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-import { Toaster } from '@/components/ui/toaster'
+import "react-loading-skeleton/dist/skeleton.css";
+import "simplebar-react/dist/simplebar.min.css";
 
-const inter = Inter({ subsets: ['latin'] })
+import { Toaster } from "@/components/ui/toaster";
 
-export const metadata = constructMetadata()
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className='light'>
+    <html lang="en" className="light">
       <Providers>
-        <body
-          className={cn(
-            'min-h-screen font-sans antialiased grainy',
-            inter.className
-          )}>
-          <Toaster />
-          <Navbar />
-          {children}
-        </body>
+        <ClerkProvider
+          appearance={{
+            variables: { colorPrimary: "#624cf5" },
+          }}
+        >
+          <body
+            className={cn(
+              "min-h-screen font-sans antialiased grainy",
+              inter.className
+            )}
+          >
+            <Toaster />
+            <Navbar />
+            {children}
+          </body>
+        </ClerkProvider>
       </Providers>
     </html>
-  )
+  );
 }
