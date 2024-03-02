@@ -18,14 +18,10 @@ export function absoluteUrl(path: string) {
 export function constructMetadata({
   title = "AI-PDF READER ",
   description = "AI-PDF READER is an open-source software to make chatting to your PDF files easy.",
-  image = "/thumbnail.png",
-  icons = "/favicon.ico",
   noIndex = false
 }: {
   title?: string
   description?: string
-  image?: string
-  icons?: string
   noIndex?: boolean
 } = {}): Metadata {
   return {

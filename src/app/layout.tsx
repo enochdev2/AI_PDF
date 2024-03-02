@@ -10,10 +10,15 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "simplebar-react/dist/simplebar.min.css";
 
 import { Toaster } from "@/components/ui/toaster";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = constructMetadata();
+
+export const metadata: Metadata = {
+  title : "AI-PDF READER ",
+  description : "AI-PDF READER is an open-source software to make chatting to your PDF files easy.",
+};
 
 export default function RootLayout({
   children,

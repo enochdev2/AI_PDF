@@ -1,20 +1,20 @@
-import Link from 'next/link'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { currentUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
-import MaxWidthWrapper from './MaxWidthWrapper'
-import { Button, buttonVariants } from './ui/button'
-import {
-  LoginLink,
-  RegisterLink,
-  getKindeServerSession,
-} from '@kinde-oss/kinde-auth-nextjs/server'
-import { ArrowRight } from 'lucide-react'
-import UserAccountNav from './UserAccountNav'
-import MobileNav from './MobileNav'
+import MaxWidthWrapper from "./MaxWidthWrapper";
+import { Button, buttonVariants } from "./ui/button";
+import { ArrowRight } from "lucide-react";
+import UserAccountNav from "./UserAccountNav";
+import MobileNav from "./MobileNav";
 
-const Navbar = () => {
-  const { getUser } = getKindeServerSession()
-  const user = getUser()
+import Image from "next/image";
+import SignOut from "./SignOut";
+
+const Navbar = async () => {
+
+  const user: any = await currentUser();
+  // console.log("🚀 ~ Navbar ~ user:", user)
 
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
@@ -39,20 +39,20 @@ const Navbar = () => {
                   Pricing
                 </Link>
                 <SignedOut>
-                  <Button
-                    asChild
-                    className="button bg-purple-gradient bg-cover"
-                  >
+                  <Button asChild className=" bg-purple-gradient bg-cover">
                     <Link href="/sign-in">Login</Link>
                   </Button>
                 </SignedOut>
-                <RegisterLink
-                  className={buttonVariants({
-                    size: "sm",
-                  })}
-                >
-                  Get started <ArrowRight className="ml-1.5 h-5 w-5" />
-                </RegisterLink>
+                <SignedOut>
+                  <Button
+                    asChild
+                    className={buttonVariants({
+                      size: "sm",
+                    })}
+                  >
+                    Get started <ArrowRight className="ml-1.5 h-5 w-5" />
+                  </Button>
+                </SignedOut>
               </>
             ) : (
               <>
@@ -66,7 +66,7 @@ const Navbar = () => {
                   Dashboard
                 </Link>
                 <SignedIn>
-                  <UserAccountNav
+                  {/* <UserAccountNav
                     name={
                       !user.given_name || !user.family_name
                         ? "Your Account"
@@ -74,15 +74,16 @@ const Navbar = () => {
                     }
                     email={user.email ?? ""}
                     imageUrl={user.picture ?? ""}
-                  />
+                  /> */}
                 </SignedIn>
               </>
             )}
           </div>
+          <SignOut/>
         </div>
       </MaxWidthWrapper>
     </nav>
   );
-}
+};
 
-export default Navbar
+export default Navbar;
