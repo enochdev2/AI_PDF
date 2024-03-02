@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://enochpromiseva:Enoch2558@cluster0.ipojms3.mongodb.net/AiPdf?retryWrites=true&w=majority"
+}
+
+
+model User {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+
+  email                   String   @unique
+  userId                  String   @db.ObjectId 
+  files                   File[]  
+ 
+  stripeCustomerId        String?  @unique
+  stripeSubscriptionId    String?  @unique
+  stripePriceId           String?
+  stripeCurrentPeriodEnd  DateTime?
+}
+
+
+enum UploadStatus {
+  PENDING
+  PROCESSING
+  FAILED
+  SUCCESS
+}
+
+model File {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId 
+  name        String
+  uploadStatus UploadStatus @default(PENDING)
+  url         String
+  key         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String?  @map("userId") 
+  
+  // Add opposite relation field on the File model
+ user   User?   @relation(fields: [userId], references: [id])
+}
+
+
+
+
+
+
+
+
+
+
