@@ -1,5 +1,6 @@
 import { db } from '@/db'
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { auth, currentUser } from "@clerk/nextjs";
+// import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import {
   createUploadthing,
   type FileRouter,
@@ -7,22 +8,25 @@ import {
 
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf'
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
-import { PineconeStore } from 'langchain/vectorstores/pinecone'
-import { getPineconeClient } from '@/lib/pinecone'
-import { getUserSubscriptionPlan } from '@/lib/stripe'
-import { PLANS } from '@/config/stripe'
+// import { PineconeStore } from 'langchain/vectorstores/pinecone'
+// import { getPineconeClient } from '@/lib/pinecone'
+// import { getUserSubscriptionPlan } from '@/lib/stripe'
+// import { PLANS } from '@/config/stripe'
 
 const f = createUploadthing()
 
 const middleware = async () => {
-  const { getUser } = getKindeServerSession()
-  const user = getUser()
+ const user:any = await currentUser();
+  const {userId} =  auth()
 
   if (!user || !user.id) throw new Error('Unauthorized')
 
-  const subscriptionPlan = await getUserSubscriptionPlan()
+  // const subscriptionPlan = await getUserSubscriptionPlan()
 
-  return { subscriptionPlan, userId: user.id }
+  return {
+    // subscriptionPlan,
+    userId: user.id
+  }
 }
 
 const onUploadComplete = async ({
@@ -67,8 +71,8 @@ const onUploadComplete = async ({
 
     const pagesAmt = pageLevelDocs.length
 
-    const { subscriptionPlan } = metadata
-    const { isSubscribed } = subscriptionPlan
+    // const { subscriptionPlan } = metadata
+    // const { isSubscribed } = subscriptionPlan
 
     const isProExceeded =
       pagesAmt >

@@ -11,12 +11,12 @@ import { PLANS } from '@/config/stripe'
 
 interface ChatWrapperProps {
   fileId: string
-  isSubscribed: boolean
+  // isSubscribed: boolean
 }
 
 const ChatWrapper = ({
   fileId,
-  isSubscribed,
+  // isSubscribed,
 }: ChatWrapperProps) => {
   const { data, isLoading } =
     trpc.getFileUploadStatus.useQuery(
@@ -82,14 +82,16 @@ const ChatWrapper = ({
             <p className='text-zinc-500 text-sm'>
               Your{' '}
               <span className='font-medium'>
-                {isSubscribed ? 'Pro' : 'Free'}
+                {/* {isSubscribed ? 'Pro' : */}
+                  'Free'
+                {/* } */}
               </span>{' '}
               plan supports up to{' '}
-              {isSubscribed
+              {/* {isSubscribed
                 ? PLANS.find((p) => p.name === 'Pro')
                     ?.pagesPerPdf
                 : PLANS.find((p) => p.name === 'Free')
-                    ?.pagesPerPdf}{' '}
+                    ?.pagesPerPdf}{' '} */}
               pages per PDF.
             </p>
             <Link
