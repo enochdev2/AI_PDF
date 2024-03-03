@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
@@ -12,8 +12,9 @@ import Image from "next/image";
 import SignOut from "./SignOut";
 
 const Navbar = async () => {
+  const { userId } = auth();
+  console.log("🚀 ~ Navbar ~ userId :", userId )
   const user: any = await currentUser();
-  // console.log("🚀 ~ Navbar ~ user:", user)
 
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
@@ -75,7 +76,7 @@ const Navbar = async () => {
                         : `${user.firstName} ${user.lastName}`
                     }
                     email={user.email ?? ""}
-                    imageUrl={user.picture ?? ""}
+                    imageUrl={user.imageUrl ?? ""}
                   />
                 </SignedIn>
               </>
